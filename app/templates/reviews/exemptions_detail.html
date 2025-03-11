@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<h2>{{object.name_of_applicant}}</h2>
+<hr>
+<p><strong>date_received: </strong>{{object.date_received|cut:"00:00:00"}}</p>
+<p><strong>type_of_exemption: </strong>{{object.type_of_exemption}}</p>
+<p><strong>telephone_no: </strong>{{object.telephone_no_1}} {{object.telephone_no_2}}</p>
+<p><strong>email: </strong>{{object.email|lower}}</p>
+<p><strong>amount_to_be_paid: </strong>${{object.amount_to_be_paid}}</p>
+<p><strong>status_1: </strong>{{object.status_1}}</p>
+<p><strong>comments: </strong>{{object.comments}}</p>
+<p><strong>date_of_status_update: </strong>{{object.date_of_status_update}}</p>
+<p><strong>notes: </strong>{{object.notes}}</p>
+<p><strong>decision: </strong>{{object.decision}}</p>
+<p><strong>attachment: </strong>{{object.attachment}}</p>
+<p><strong>status_2: </strong>{{object.status_2}}</p>
+<p><strong>castries: </strong>{{object.castries|yesno:"yes,no,maybe"}}</p>
+<p><strong>vieux_fort: </strong>{{object.vieux_fort|yesno:"yes,no,maybe"}}</p>
+{% endblock content %}
