@@ -10,8 +10,8 @@
     <p><strong>type_of_exemption: </strong>{{object.type_of_exemption}}</p>
     <p><strong>telephone_no: </strong>{{object.telephone_no_1}}
         {{object.telephone_no_2}}</p>
-    <p><strong>email: </strong>{{object.email|lower}}</p>
-    <p><strong>amount_to_be_paid: </strong>${{object.amount_to_be_paid}}</p>
+    <p><strong>email: </strong><a href="mailto:{{object.email|lower}}">{{object.email|lower}}</a></p>
+    <p><strong>amount_to_be_paid: </strong>XCD${{object.amount_to_be_paid}}</p>
     <p><strong>status_1: </strong>{{object.status_1}}</p>
     <p><strong>comments: </strong>{{object.comments}}</p>
     <p><strong>date_of_status_update: </strong>{{object.date_of_status_update}}

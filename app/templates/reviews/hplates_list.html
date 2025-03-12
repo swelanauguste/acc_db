@@ -1,16 +1,16 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h2>H Plates</h2>
+<h2><a class="text-decoration-none text-dark" href="{% url 'hplate-list' %}">H Plates</a></h2>
 <hr>
 <form class="select-form small"
     method="get"
     action="">
-    <div class="row col-lg-6 mx-auto">
+    <div class="row col-lg-4 mx-auto">
         <div class="mb-2">
             <input type="text"
                 name="query"
-                class="form-control"
+                class="form-control rounded-pill"
                 placeholder="Search..."
                 value="{{ request.GET.query }}">
         </div>
