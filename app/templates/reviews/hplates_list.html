@@ -3,10 +3,102 @@
 {% block content %}
 <h2>H Plates</h2>
 <hr>
+<form class="select-form small"
+    method="get"
+    action="">
+    <div class="row col-lg-6 mx-auto">
+        <div class="mb-2">
+            <input type="text"
+                name="query"
+                class="form-control"
+                placeholder="Search..."
+                value="{{ request.GET.query }}">
+        </div>
+        <div class="text-end">
+            <p><a href="{% url 'hplate-list' %}">Clear</a></p>
+        </div>
+    </div>
+</form><br>
+<div class="pagination">
+    {% if is_paginated %}
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+        <a href="?page=1&{{ query_params }}">&laquo; First</a>
+        <a
+            href="?page={{ page_obj.previous_page_number }}&{{ query_params }}">Previous</a>
+        {% endif %}
 
-{% for ob in object_list %}
-<p><a href="{% url 'hplate-detail' ob.id %}">{{ob.applicant_s_name|title}}</a>
-</p>
-{% endfor %}
+        <span class="current">
+            Page {{ page_obj.number }} of
+            {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+        <a
+            href="?page={{ page_obj.next_page_number }}&{{ query_params }}">Next</a>
+        <a href="?page={{ page_obj.paginator.num_pages }}&{{ query_params }}">Last
+            &raquo;</a>
+        {% endif %}
+    </span>
+    {% endif %}
+</div>
+<br>
+<div class="table-responsive">
+    <table class="table table-sm table-hover small">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">applicant_s_name</th>
+                <th scope="col">date_received</th>
+                <th scope="col">Contact</th>
+                <th scope="col">registration_number</th>
+                <th scope="col">vehicle_model_man</th>
+                <th scope="col">chassis_vin_number</th>
+                <th scope="col">status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ob in object_list %}
+            <tr>
+                <th scope="row">{{forloop.counter}}</th>
+                <td><a
+                        href="{% url 'hplate-detail' ob.id %}">{{ob.applicant_s_name|title}}</a>
+                </td>
+                <td>{{ob.date_received|cut:" 00:00:00"}}</td>
+                <td>{{ob.primary_contact_number|cut:".0"}}</td>
+                <td>{{ob.registration_number}}</td>
+                <td>{{ob.vehicle_model_man}}</td>
+                <td>{{ob.chassis_vin_number}}</td>
+                <td>{{ob.status}}</td>
+            </tr>
+            {% endfor %}
+
+        </tbody>
+    </table>
+</div>
+<br>
+<div class="pagination">
+    {% if is_paginated %}
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+        <a href="?page=1&{{ query_params }}">&laquo; First</a>
+        <a
+            href="?page={{ page_obj.previous_page_number }}&{{ query_params }}">Previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of
+            {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+        <a
+            href="?page={{ page_obj.next_page_number }}&{{ query_params }}">Next</a>
+        <a href="?page={{ page_obj.paginator.num_pages }}&{{ query_params }}">Last
+            &raquo;</a>
+        {% endif %}
+    </span>
+    {% endif %}
+</div>
 
 {% endblock content %}

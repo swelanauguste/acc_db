@@ -26,7 +26,7 @@
     </style>
 </head>
 
-<body>
+<body class="small">
     <nav class="py-3 navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
             <a href="/">Home</a>
@@ -36,17 +36,17 @@
         </div>
     </nav><br>
     {% if messages %}
-<ul class="col-lg-3 mx-auto list-unstyled">
-    {% for message in messages %}
-    <li {% if message.tags %} class="alert alert-info {{ message.tags }}"{% endif %}>{{ message }}</li>
-    {% endfor %}
-</ul>
-{% endif %}
-    <div class="container">
+        <ul class="col-lg-3 mx-auto list-unstyled">
+            {% for message in messages %}
+            <li {% if message.tags %} class="alert alert-info {{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <div class="container-fluid min-vh-100">
         {% block content %}
         {% endblock content %}
     </div>
-
+    {% include 'footer.html' %}
     <script
         src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"

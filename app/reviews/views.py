@@ -1,13 +1,13 @@
 import os
 import sqlite3
 import subprocess
-
+from urllib.parse import urlencode
 import pandas as pd
 from django.conf import settings
 from django.contrib import messages
 from django.shortcuts import redirect, render
 from django.views.generic import DetailView, ListView, TemplateView
-
+from django.db.models import Q
 from .models import Exemptions, HPlates
 from .tasks import download_file, export_to_sqlite
 
@@ -55,7 +55,7 @@ def download_file(request):
     server = "//10.137.8.9/cworks"
     username = "cworks"
     password = "password3"
-    remote_path = "cto_support/TRANSPORT SECRETARY/data.accdb"
+    remote_path = "cto_support/TRANSPORT SECRETARY/CORRESPONDENCE_DATABASE_TRANSPORT.accdb"
     local_path = os.path.join(settings.BASE_DIR, "static/db/data.accdb")
 
     command = f'smbclient "{server}" -U "{username}%{password}" -c "get \\"{remote_path}\\" {local_path}"'
@@ -80,16 +80,37 @@ def index(request):
     return render(request, "reviews/index.html")
 
 
-# def update_database(request):
-#     download_file(request)
-#     export_to_sqlite()
-#     return redirect("/")
-
-
 class HPplateListView(ListView):
     model = HPlates
-    # paginate_by = 20
+    paginate_by = 20
+    
+    def get_queryset(self):
+        queryset = self.model.objects.all()
+        
+        query = self.request.GET.get("query")
 
+        if query:
+             queryset = queryset.filter(
+                    Q(applicant_s_name__icontains=query)
+                    | Q(primary_contact_number__icontains=query)
+                    | Q(registration_number__icontains=query)
+                    | Q(vehicle_model_man__icontains=query)
+                    | Q(chassis_vin_number__icontains=query)
+                    | Q(action_taken__icontains=query)
+                    | Q(status__icontains=query)
+                    | Q(secondary_contact__icontains=query)
+                )
+        return queryset
+    
+        # Preserve query parameters for pagination
+        query_params = self.request.GET.copy()
+        if "page" in query_params:
+            query_params.pop(
+                "page"
+            )  # Remove 'page' from query parameters to prevent duplication
+        context["query_params"] = urlencode(query_params)
+
+        return context
 
 class HPplatesDetailView(DetailView):
     model = HPlates
@@ -97,7 +118,39 @@ class HPplatesDetailView(DetailView):
 
 class ExemptionListView(ListView):
     model = Exemptions
-    # paginate_by = 100
+    paginate_by = 20
+
+    
+    def get_queryset(self):
+        queryset = self.model.objects.all()
+        
+        query = self.request.GET.get("query")
+
+        if query:
+             queryset = queryset.filter(
+                    Q(name_of_applicant__icontains=query)
+                    | Q(type_of_exemption__icontains=query)
+                    | Q(telephone_no_1__icontains=query)
+                    | Q(telephone_no_2__icontains=query)
+                    | Q(email__icontains=query)
+                    | Q(status_1__icontains=query)
+                    | Q(date_of_status_update__icontains=query)
+                    | Q(notes__icontains=query)
+                    | Q(comments__icontains=query)
+                    | Q(comments__icontains=query)
+                    | Q(comments__icontains=query)
+                )
+        return queryset
+    
+        # Preserve query parameters for pagination
+        query_params = self.request.GET.copy()
+        if "page" in query_params:
+            query_params.pop(
+                "page"
+            )  # Remove 'page' from query parameters to prevent duplication
+        context["query_params"] = urlencode(query_params)
+
+        return context
 
 
 class ExemptionDetailView(DetailView):

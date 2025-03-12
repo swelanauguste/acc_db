@@ -2,17 +2,26 @@
 
 
 {% block content %}
-<h2>{{object.applicant_s_name}}</h2>
-<hr>
-<p><strong>date_received: </strong>{{object.date_received|cut:"00:00:00"}}</p>
-<p><strong>primary_contact_number: </strong>{{object.primary_contact_number|cut:".0"}}</p>
-<p><strong>registration_number: </strong>{{object.registration_number|upper}}</p>
-<p><strong>vehicle_model_man: </strong>{{object.vehicle_model_man|upper}}</p>
-<p><strong>chassis_vin_number: </strong>{{object.chassis_vin_number|upper}}</p>
-<p><strong>action_taken: </strong>{{object.action_taken|title}}</p>
-<p><strong>date: </strong>{{object.date|cut:"00:00:00"}}</p>
-<p><strong>attachments: </strong>{{object.attachments}}</p>
-<p><strong>new_application: </strong>{{object.new_aplication|yesno:"yes,no,maybe"}}</p>
-<p><strong>secondary_contact: </strong>{{object.secondary_contact}}</p>
-<p><strong>continued_use: </strong>{{object.continued_use|yesno:"yes,no,maybe"}}</p>
+<div class="container">
+    <h2>{{object.applicant_s_name}}</h2>
+    <hr>
+    <p><strong>date_received: </strong>{{object.date_received|cut:"00:00:00"}}
+    </p>
+    <p><strong>primary_contact_number:
+        </strong>{{object.primary_contact_number|cut:".0"}}</p>
+    <p><strong>registration_number:
+        </strong>{{object.registration_number|upper}}</p>
+    <p><strong>vehicle_model_man: </strong>{{object.vehicle_model_man|upper}}
+    </p>
+    <p><strong>chassis_vin_number: </strong>{{object.chassis_vin_number|upper}}
+    </p>
+    <p><strong>action_taken: </strong>{{object.action_taken|title}}</p>
+    <p><strong>date: </strong>{{object.date|cut:"00:00:00"}}</p>
+    <p><strong>attachments: </strong>{{object.attachments}}</p>
+    <p><strong>new_application:
+        </strong>{{object.new_aplication|yesno:"yes,no,maybe"}}</p>
+    <p><strong>secondary_contact: </strong>{{object.secondary_contact}}</p>
+    <p><strong>continued_use:
+        </strong>{{object.continued_use|yesno:"yes,no,maybe"}}</p>
+</div>
 {% endblock content %}

@@ -2,11 +2,115 @@
 
 
 {% block content %}
-    <h2>Exemptions</h2>
-    <hr>
-    {% for ob in object_list %}
-        <p><a href="{% url 'exemption-detail' ob.id %}">{{ob.name_of_applicant|title}}</a></p>
-    {% endfor %}
-        
+<h2>Exemptions</h2>
+<hr>
+
+<form class="select-form small"
+    method="get"
+    action="">
+    <div class="row col-lg-6 mx-auto">
+        <div class="mb-2">
+            <input type="text"
+                name="query"
+                class="form-control"
+                placeholder="Seaarch..."
+                value="{{ request.GET.query }}">
+        </div>
+        <div class="text-end">
+            <p><a href="{% url 'exemption-list' %}">Clear</a></p>
+        </div>
+    </div>
+</form><br>
+<div class="pagination">
+    {% if is_paginated %}
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+        <a href="?page=1&{{ query_params }}">&laquo; First</a>
+        <a
+            href="?page={{ page_obj.previous_page_number }}&{{ query_params }}">Previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of
+            {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+        <a
+            href="?page={{ page_obj.next_page_number }}&{{ query_params }}">Next</a>
+        <a href="?page={{ page_obj.paginator.num_pages }}&{{ query_params }}">Last
+            &raquo;</a>
+        {% endif %}
+    </span>
+    {% endif %}
+</div>
+<br>
+<div class="table-responsive">
+    <table class="table table-sm table-hover small">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">applicant_s_name</th>
+                <th scope="col">date_received</th>
+                <th scope="col">type_of_exemption</th>
+                <th scope="col">telephone_no_1</th>
+                <th scope="col">email</th>
+                <th scope="col">amount_to_be_paid</th>
+                <th scope="col">status_1 (date; status; comment)</th>
+                <th scope="col">notes</th>
+                <th scope="col">status_2</th>
+                <th scope="col">castries</th>
+                <th scope="col">vieux_fort</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ob in object_list %}
+            <tr>
+                <th scope="row">{{forloop.counter}}</th>
+                <td><a
+                        href="{% url 'exemption-detail' ob.id %}">{{ob.name_of_applicant|title}}</a>
+                </td>
+                <td>{{ob.date_received|cut:" 00:00:00"}}</td>
+                <td>{{ob.type_of_exemption|upper}}</td>
+                <td>{{ob.telephone_no_1}};
+                    {{ob.telephone_no_2}}</td>
+                <td><a href="mailto:{{ob.email}}">{{ob.email|lower}}</a></td>
+                <td>XCD${{ob.amount_to_be_paid|floatformat:2 }}</td>
+                <td>{{ob.date_of_status_update|cut:" 00:00:00"}}; {{ob.status_1}}; {{ob.comments}}</td>
+                <td>{{ob.notes}}</td>
+                <td>{{ob.status_2|yesno:"yes,no,maybe"}}</td>
+                <td>{{ob.castries|yesno:"yes,no,maybe"}}</td>
+                <td>{{ob.vieux_fort|yesno:"yes,no,maybe"}}</td>
+
+            </tr>
+            {% endfor %}
+
+        </tbody>
+    </table>
+</div>
+<br>
+<div class="pagination">
+    {% if is_paginated %}
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+        <a href="?page=1&{{ query_params }}">&laquo; First</a>
+        <a
+            href="?page={{ page_obj.previous_page_number }}&{{ query_params }}">Previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of
+            {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+        <a
+            href="?page={{ page_obj.next_page_number }}&{{ query_params }}">Next</a>
+        <a href="?page={{ page_obj.paginator.num_pages }}&{{ query_params }}">Last
+            &raquo;</a>
+        {% endif %}
+    </span>
+    {% endif %}
+</div>
+
 {% endblock content %}
-    
