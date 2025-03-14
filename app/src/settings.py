@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     # "hplates",
     # "exemptions",
     "affidavits",
-    # "book_records",
+    "book_records",
     # "customs",
     # "disabled_parking",
     # "incoming_correspondences",
@@ -165,8 +165,8 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 
 LOGIN_REDIRECT_URL = "/"
-LOGIN_URL = "/user/login/"
-LOGOUT_URL = "/user/logout/"
+LOGIN_URL = "/users/"
+LOGOUT_URL = "/users/logout/"
 
 # Email settings
 ADMINS = [

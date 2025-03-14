@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<div class="container">
+    <h2>{{object.name_of_applicant}}</h2>
+    <hr>
+    <p><strong>date: </strong>{{object.date|cut:"00:00:00"}}
+    </p>
+    <p><strong>book_type: </strong>{{object.book_type}}</p>
+    <p><strong>date_ordered: </strong>{{object.date_ordered|cut:"00:00:00"}}</p>
+    <p><strong>email: {{object.email|lower}}</p>
+    <p><strong>qty_ordered: </strong>{{object.qty_ordered}}</p>
+    <p><strong>qty_received: </strong>{{object.qty_received}}</p>
+    <p><strong>date_received: </strong>{{object.date_received|cut:"00:00:00"}}</p>
+    <p><strong>agency_ordered_from: </strong>{{object.agency_ordered_from}}
+    </p>
+    <p><strong>status_of_order: </strong>{{object.status_of_order}}</p>
+    <p><strong>status_date: </strong>{{object.status_date|cut:"00:00:00"}}</p>
+</div>
+{% endblock content %}

@@ -2,16 +2,10 @@
 
 {% block content %}
 <div class="d-flex align-items-center justify-content-between">
-    <div>
-        <h4><a class="text-decoration-none text-dark"
-                href="{% url 'affidavits-list' %}">Affidavits (pre-2025)</a>
-        </h4>
-        <h4><a class="text-decoration-none text-dark"
-                href="{% url 'affidavit-new-list' %}">Affidavits
-                (post-2025)</a></h4>
-    </div>
-    <a class="btn btn-dark"
-        href="{% url 'affidavit-create' %}">Add</a>
+    <h2><a class="text-decoration-none text-dark"
+            href="{% url 'book-records-list' %}">Book Records</a></h2>
+
+
 </div>
 <hr>
 <form class="select-form small"
@@ -26,7 +20,7 @@
                 value="{{ request.GET.query }}">
         </div>
         <div class="text-end">
-            <p><a href="{% url 'affidavits-list' %}">Clear</a></p>
+            <p><a href="{% url 'book-records-list' %}">Clear</a></p>
         </div>
     </div>
 </form><br>
@@ -60,15 +54,15 @@
         <thead>
             <tr>
                 <th scope="col">#</th>
+                <th scope="col">date</th>
+                <th scope="col">book_type</th>
+                <th scope="col">date_ordered</th>
+                <th scope="col">qty_ordered</th>
+                <th scope="col">qty_received</th>
                 <th scope="col">date_received</th>
-                <th scope="col">officer_name</th>
-                <th scope="col">contact</th>
-                <th scope="col">licence_name</th>
-                <th scope="col">licence_number</th>
-                <th scope="col">address</th>
-                <th scope="col">vehicle_number</th>
-                <th scope="col">vehicle_owner</th>
-                <th scope="col">status</th>
+                <th scope="col">agency_ordered_from</th>
+                <th scope="col">email</th>
+                <th scope="col">status_of_order</th>
                 <th scope="col">status_date</th>
             </tr>
         </thead>
@@ -76,18 +70,18 @@
             {% for ob in object_list %}
             <tr>
                 <th scope="row">{{forloop.counter}}</th>
-                <td>{{ob.date_received|cut:" 00:00:00"}}</td>
+                <td>{{ob.date|cut:" 00:00:00"}}</td>
 
                 <td><a
-                        href="{% url 'affidavits-detail' ob.id %}">{{ob.officer_name|upper}}</a>
+                        href="{% url 'book-records-detail' ob.id %}">{{ob.book_type|upper}}</a>
                 </td>
-                <td>{{ob.contact_number|cut:".0"}}</td>
-                <td>{{ob.licence_name|title}}</td>
-                <td>{{ob.licence_number|upper}}</td>
-                <td>{{ob.adress}}</td>
-                <td>{{ob.vehicle_number}}</td>
-                <td>{{ob.vehicle_owner|title}}</td>
-                <td>{{ob.status}}</td>
+                <td>{{ob.date_ordered|cut:"00:00:00"}}</td>
+                <td>{{ob.qty_ordered|title}}</td>
+                <td>{{ob.qty_received}}</td>
+                <td>{{ob.date_received|cut:"00:00:00"}}</td>
+                <td>{{ob.agency_ordered_from}}</td>
+                <td>{{ob.email|lower}}</td>
+                <td>{{ob.status_of_order}}</td>
                 <td>{{ob.status_date|cut:" 00:00:00"}}</td>
             </tr>
             {% endfor %}

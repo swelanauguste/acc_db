@@ -2,11 +2,16 @@
 
 {% block content %}
 <div class="d-flex align-items-center justify-content-between">
-    <h2><a class="text-decoration-none text-dark"
-            href="{% url 'affidavits-list' %}">Affidavits (pre-2025)</a></h2>
-    <h2><a class="text-decoration-none text-dark"
-            href="{% url 'affidavit-new-list' %}">Affidavits (post-2025)</a></h2>
-    <a class="btn btn-dark" href="{% url 'affidavit-create' %}">Add</a>
+    <div>
+        <h4><a class="text-decoration-none text-dark"
+                href="{% url 'affidavits-list' %}">Affidavits (pre-2025)</a>
+        </h4>
+        <h4><a class="text-decoration-none text-dark"
+                href="{% url 'affidavit-new-list' %}">Affidavits
+                (post-2025)</a></h4>
+    </div>
+    <a class="btn btn-dark"
+        href="{% url 'affidavit-create' %}">Add</a>
 </div>
 <hr>
 <form class="select-form small"
