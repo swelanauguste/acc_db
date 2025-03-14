@@ -5,7 +5,7 @@ python manage.py migrate
 
 python manage.py createsuperuser --no-input
 
-python manage.py migrate
+
 
 # uv run ./manage.py startapp users                      
 # uv run ./manage.py startapp hplates                      
@@ -38,4 +38,6 @@ python manage.py migrate
 # uv run ./manage.py inspectdb outgoing_correspondences > ./outgoing_correspondences/models.py
 # uv run ./manage.py inspectdb personalized_number_plates > ./personalized_number_plates/models.py
 # uv run ./manage.py inspectdb special_permits > ./special_permits/models.py
+
+exec "$@"
 
