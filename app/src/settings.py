@@ -135,7 +135,7 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-directories = ["templates", "static", "static/db", "static/csv"]
+directories = ["templates", "static", "static/db", "static/csv", "static/img"]
 
 for directory in directories:
     if not os.path.exists(directory):
