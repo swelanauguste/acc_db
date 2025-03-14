@@ -1,33 +1,34 @@
 from itertools import chain
 
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.views.generic import CreateView, DetailView, ListView, UpdateView
-
+from django.db.models import Q
 from .forms import AffidavitForm
 from .models import AffidavitNew, Affidavits
 
 
-class AffidavitNewListView(ListView):
+class AffidavitNewListView(LoginRequiredMixin, ListView):
     model = AffidavitNew
 
 
-class AffidavitNewDetailView(DetailView):
+class AffidavitNewDetailView(LoginRequiredMixin, DetailView):
     model = AffidavitNew
 
 
-class AffidavitCreateView(CreateView):
-    model = AffidavitNew
-    form_class = AffidavitForm
-
-
-class AffidavitUpdateView(UpdateView):
+class AffidavitCreateView(LoginRequiredMixin, CreateView):
     model = AffidavitNew
     form_class = AffidavitForm
 
 
-class AffidavitsListView(ListView):
+class AffidavitUpdateView(LoginRequiredMixin, UpdateView):
+    model = AffidavitNew
+    form_class = AffidavitForm
+
+
+class AffidavitsListView(LoginRequiredMixin, ListView):
     model = Affidavits
 
 
-class AffidavitsDetailView(DetailView):
+class AffidavitsDetailView(LoginRequiredMixin, DetailView):
     model = Affidavits
