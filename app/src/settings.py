@@ -31,6 +31,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.sites",
+    "django.contrib.humanize",
     "crispy_forms",
     "crispy_bootstrap5",
     "users",
@@ -160,3 +162,30 @@ PASSWORD_RESET_TIMEOUT = 3600
 # Crispy forms settings
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
+
+
+LOGIN_REDIRECT_URL = "/"
+LOGIN_URL = "/user/login/"
+LOGOUT_URL = "/user/logout/"
+
+# Email settings
+ADMINS = [
+    ("infrastructure complaints", "kingship.lc@gmail.com"),
+]
+
+
+if DEBUG:
+    EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+    EMAIL_FILE_PATH = "emails"
+else:
+    EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+    # EMAIL_HOST = "mail.govt.lc"
+    EMAIL_HOST = "smtp.gmail.com"
+    EMAIL_HOST_USER = "kingship.lc@gmail.com"
+    EMAIL_HOST_PASSWORD = os.environ.get("PASS")
+    EMAIL_PORT = 587
+    EMAIL_USE_TLS = True
+    # EMAIL_USE_SSL = False
+DEFAULT_FROM_EMAIL = "kingship.lc@gmail.com"
+
+SITE_ID = 1

@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+
+{% load humanize %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container-fluid py-5">
+    <h2>{{object}} ({{object.request_type|upper}})</h2>
+    <hr>
+    <div class="d-flex justify-content-end align-items-center mb-3">
+        <a class="btn"
+            href="{% url 'affidavit-new-update' object.slug %}">edit</a>
+        <a class="btn"
+            href="">change status</a>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="row">
+                <div class="col">
+                    <p><strong>date_received: </strong>{{object.date_received}}
+                    </p>
+                    </p>
+                    <p><strong>date_required:
+                        </strong>{{object.date_required}}</p>
+                    <p><strong>officer:
+                        </strong>{{object.officer_name|upper}}</p>
+                    <p><strong>officer_contact:
+                        </strong>{{object.contact_number}}
+                    </p>
+                    <p><strong>request_type:
+                        </strong>{{object.request_type|upper}}
+                    </p>
+                </div>
+                <div class="col">
+                    <p><strong>licence_name:
+                        </strong>{{object.licence_name|upper}}</p>
+                    <p><strong>licence_number:
+                        </strong>{{object.licence_number}}
+                    </p>
+                    <p><strong>Date of birth: </strong>{{object.dob}}</p>
+                    <p><strong>address: </strong>{{object.address}}</p>
+                </div>
+                <div class="col">
+                    <p><strong>vehicle_owner:
+                        </strong>{{object.vehicle_owner|yesno}}</p>
+                    <p><strong>vehicle_number:
+                        </strong>{{object.vehicle_number}}
+                    </p>
+                    <p><strong>maker:
+                        </strong>{{object.maker}}</p>
+                    <p><strong>chassis_number:
+                        </strong>{{object.chassis_number}}</p>
+                    <p><strong>engine_number:
+                        </strong>{{object.engine_number}}</p>
+                    <p><strong>colour:
+                        </strong>{{object.colour}}</p>
+                </div>
+            </div>
+            <hr>
+            {% if object.attachment %}
+            <p><strong>attachment:
+                </strong><a class="text-white"
+                    target="_blank"
+                    href="{{object.attachment.url}}">{{object.attachment.url|cut:'/media/affidavit_new/'}}</a>
+            </p>
+            {% endif %}
+            <p><strong>comments:
+                </strong>{{object.comments}}</p>
+            <hr>
+            <p class="text-muted"><strong>created_at:
+                </strong>{{object.created_at|naturaltime}} by:
+                {{object.created_by}}
+            </p>
+            <p class="text-muted"><strong>updated_at:
+                </strong>{{object.updated_at|naturaltime}} by:
+                {{object.updated_by}}
+            </p>
+        </div>
+
+        <div class="col-lg-3">
+
+            <form action="{% url 'affidavit-add-comment' object.slug %}"
+                method="post">
+                {% csrf_token %}
+                {{form|crispy}}
+                <div class="text-end mb-4">
+                    <button type="submit">Submit</button>
+                </div>
+            </form>
+            <hr>
+            {% if object.affidavit_comments.all %}
+            <p>Comments</p>
+            <hr>
+            {% endif %}
+
+            {% for comment in object.affidavit_comments.all %}
+            <p>{{comment.comments}}</p>
+            <p class="text-end text-muted">{{comment.created_by}}</p>
+            <hr>
+            {% endfor %}
+        </div>
+    </div>
+
+</div>
+
+{% endblock content %}

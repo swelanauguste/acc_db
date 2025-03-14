@@ -12,13 +12,18 @@ urlpatterns = [
     path("new/", views.AffidavitNewListView.as_view(), name="affidavit-new-list"),
     path("new/create/", views.AffidavitCreateView.as_view(), name="affidavit-create"),
     path(
-        "affidavit-new/<int:pk>/",
+        "affidavit-new/<slug:slug>/",
         views.AffidavitNewDetailView.as_view(),
         name="affidavit-new-detail",
     ),
     path(
-        "affidavit-update/<int:pk>/",
+        "affidavit-update/<slug:slug>/",
         views.AffidavitUpdateView.as_view(),
-        name="affidavit-new-detail",
+        name="affidavit-new-update",
     ),
+    path(
+        "affidavit-add-comment/<slug:slug>/",
+        views.add_comment_view,
+        name="affidavit-add-comment",
+    )
 ]

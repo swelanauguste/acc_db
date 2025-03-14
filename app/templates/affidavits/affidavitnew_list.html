@@ -74,7 +74,7 @@
                 <td>{{ob.date_received|cut:" 00:00:00"}}</td>
 
                 <td><a
-                        href="{% url 'affidavits-detail' ob.id %}">{{ob.officer_name|upper}}</a>
+                        href="{% url 'affidavit-new-detail' ob.slug %}">{{ob.officer_name|upper}}</a>
                 </td>
                 <td>{{ob.contact_number|cut:".0"}}</td>
                 <td>{{ob.licence_name|title}}</td>

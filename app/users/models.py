@@ -7,6 +7,7 @@ from django.utils.text import slugify
 
 
 class User(AbstractUser):
+    can_register_user = models.BooleanField(default=False)
     can_view = models.BooleanField(default=True)
     can_edit = models.BooleanField(default=True)
     can_create = models.BooleanField(default=True)

@@ -82,10 +82,10 @@ class Affidavits(models.Model):
 
 
 class RequestType(models.Model):
-    name = models.TextField(unique=True)
+    name = models.CharField(max_length=255, unique=True)
 
     def __str__(self):
-        return self.name
+        return self.name.title()
 
 
 def generate_short_id():
@@ -98,27 +98,28 @@ class AffidavitNew(models.Model):
     affidavit_id = models.CharField(
         default=generate_short_id, editable=False, unique=True, max_length=8
     )
+    slug = models.SlugField(max_length=255, unique=True, blank=True, null=True)
     date_received = models.DateField()
     date_required = models.DateField()
     officer_name = models.CharField(max_length=255)
     contact_number = models.CharField(max_length=255)
-    type_requested = models.ForeignKey(
+    request_type = models.ForeignKey(
         RequestType,
         on_delete=models.CASCADE,
         blank=True,
         null=True,
-        related_name="affidavit_new",
+        related_name="affidavit_request_types",
     )
     licence_name = models.CharField(max_length=255, blank=True)
-    licence_number = models.CharField("maker", max_length=255, blank=True)
+    licence_number = models.CharField(max_length=255, blank=True)
     dob = models.DateField("D.O.B", blank=True)
     address = models.TextField()
     vehicle_owner = models.CharField(max_length=255, blank=True)
     vehicle_number = models.CharField(max_length=255, blank=True)
-    maker = models.CharField("maker", max_length=255, blank=True)
-    chassis_number = models.CharField("maker", max_length=255, blank=True)
-    engine_number = models.CharField("maker", max_length=255, blank=True)
-    colour = models.CharField("maker", max_length=255, blank=True)
+    maker = models.CharField(max_length=255, blank=True)
+    chassis_number = models.CharField(max_length=255, blank=True)
+    engine_number = models.CharField(max_length=255, blank=True)
+    colour = models.CharField(max_length=255, blank=True)
     comments = models.TextField(blank=True)
     attachment = models.FileField(blank=True, upload_to="affidavit_new/")
     created_at = models.DateTimeField(auto_now_add=True)
@@ -129,6 +130,14 @@ class AffidavitNew(models.Model):
     updated_by = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="affidavit_new_updated_by"
     )
+    
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.affidavit_id)
+        super(AffidavitNew, self).save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse("affidavit-new-detail", kwargs={"slug": self.slug})
 
     def __str__(self):
         return f"{self.affidavit_id}"
@@ -158,8 +167,7 @@ class Comment(models.Model):
     affidavit = models.ForeignKey(
         AffidavitNew, on_delete=models.CASCADE, related_name="affidavit_comments"
     )
-    comment = models.TextField()
-    comments = models.TextField(blank=True)
+    comments = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey(
@@ -168,6 +176,9 @@ class Comment(models.Model):
     updated_by = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="affidavit_updated_by"
     )
+    
+    class Meta:
+        ordering = ["-created_at"]
 
     def __str__(self):
-        return f"{self.affidavit.affidavit_id} {self.comment[:20]}"
+        return f"{self.affidavit} {self.comment[:20]}"

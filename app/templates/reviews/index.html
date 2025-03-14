@@ -3,6 +3,20 @@
 
 {% block content %}
 <div class="container">
-    <p>Home</p>
+    <div class="row">
+        <div class="col">
+            <p> <a class="btn btn-dark"
+                    href="{% url 'affidavits-list' %}">Affidavits</a></p>
+            <p> <a class="btn btn-dark"
+                    href="{% url 'exemption-list' %}">Exemptions</a></p>
+            <p> <a class="btn btn-dark"
+                    href="{% url 'hplate-list' %}">H Plate</a></p>
+        </div>
+        <div class="col">
+            <p> <a class="btn btn-dark"
+                    href="{% url 'download_file' %}">Update database</a>
+            </p>
+        </div>
+    </div>
 </div>
 {% endblock content %}
