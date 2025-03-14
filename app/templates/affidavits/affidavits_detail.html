@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<div class="container">
+    <h2>Officer: {{object.officer_name}}</h2>
+    <hr>
+    <div class="row">
+        <div class="col">
+            <p><strong>date_received:
+                </strong>{{object.date_received|cut:"00:00:00"}}
+            </p>
+            <p><strong>date_required:
+                </strong>{{object.date_required|cut:"00:00:00"}}
+            </p>
+
+            <p><strong>contact_number:
+                </strong>{{object.contact_number|cut:".0"}}</p>
+            <p><strong>licence_name:
+                </strong>{{object.licence_name|upper}}</p>
+            <p><strong>dob: </strong>{{object.dob|cut:"00:00:00"}}
+            </p>
+            <p><strong>address: </strong>{{object.adress|upper}}
+            </p>
+        </div>
+        <div class="col">
+            <p><strong>vehicle_number: </strong>{{object.vehicle_number|title}}
+            </p>
+            <p><strong>vehicle_owner: </strong>{{object.vehicle_owner}}</p>
+            <p><strong>mand: </strong>{{object.mand}}</p>
+            <p><strong>colour:
+                </strong>{{object.colour}}</p>
+            <p><strong>chassis_number: </strong>{{object.chassis_number}}</p>
+            <p><strong>status: </strong>{{object.status}}</p>
+            <p><strong>status_date: </strong>{{object.status_date|cut:"00:00:00"}}</p>
+            <p><strong>licence_number: </strong>{{object.licence_number}}</p>
+            <p><strong>engine_number: </strong>{{object.engine_number}}</p>
+            <p><strong>comments: </strong>{{object.comments}}</p>
+        </div>
+    </div>
+
+
+</div>
+{% endblock content %}

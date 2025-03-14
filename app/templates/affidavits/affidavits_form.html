@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="col-lg-4 mx-auto px-3 py-5 rounded-4 shadow bg-white">
+        <h2>Affidavits</h2>
+        <hr>
+
+        <form action=""
+            enctype="multipart/form-data"
+            method="post">
+            {{form|crispy}}
+            <div class="d-grid"><br>
+                <button class="btn btn-dark rounded-pill"
+                    type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock content %}

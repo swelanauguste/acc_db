@@ -26,15 +26,8 @@
     </style>
 </head>
 
-<body class="small">
-    <nav class="py-3 navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <a class="text-decoration-none text-white fw-bold" href="/">Home</a>
-            <a class="text-decoration-none text-white fw-bold" href="{% url 'exemption-list' %}">Exemptions</a>
-            <a class="text-decoration-none text-white fw-bold" href="{% url 'hplate-list' %}">H Plate</a>
-            <a class="text-decoration-none text-white fw-bold" href="{% url 'download_file' %}">Update database</a>
-        </div>
-    </nav><br>
+<body class="small text-white" style="background-color: rgb(36, 98, 164);">
+    {% include 'nav.html' %}
     {% if messages %}
         <ul class="col-lg-3 mx-auto list-unstyled">
             {% for message in messages %}

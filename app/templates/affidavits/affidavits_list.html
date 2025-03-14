@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="d-flex align-items-center justify-content-between">
+    <h2><a class="text-decoration-none text-dark"
+            href="{% url 'affidavits-list' %}">Affidavits (pre-2025)</a></h2>
+    <h2><a class="text-decoration-none text-dark"
+            href="{% url 'affidavit-new-list' %}">Affidavits (post-2025)</a></h2>
+    <a class="btn btn-dark" href="{% url 'affidavit-create' %}">Add</a>
+</div>
+<hr>
+<form class="select-form small"
+    method="get"
+    action="">
+    <div class="row col-lg-4 mx-auto">
+        <div class="mb-2">
+            <input type="text"
+                name="query"
+                class="form-control rounded-pill"
+                placeholder="Search..."
+                value="{{ request.GET.query }}">
+        </div>
+        <div class="text-end">
+            <p><a href="{% url 'affidavits-list' %}">Clear</a></p>
+        </div>
+    </div>
+</form><br>
+
+<div class="pagination">
+    {% if is_paginated %}
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+        <a href="?page=1&{{ query_params }}">&laquo; First</a>
+        <a
+            href="?page={{ page_obj.previous_page_number }}&{{ query_params }}">Previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of
+            {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+        <a class="text-decoration-none text-white"
+            href="?page={{ page_obj.next_page_number }}&{{ query_params }}">Next</a>
+        <a href="?page={{ page_obj.paginator.num_pages }}&{{ query_params }}">Last
+            &raquo;</a>
+        {% endif %}
+    </span>
+    {% endif %}
+</div>
+<br>
+<div class="table-responsive">
+    <table class="table table-sm table-hover small">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">date_received</th>
+                <th scope="col">officer_name</th>
+                <th scope="col">contact</th>
+                <th scope="col">licence_name</th>
+                <th scope="col">licence_number</th>
+                <th scope="col">address</th>
+                <th scope="col">vehicle_number</th>
+                <th scope="col">vehicle_owner</th>
+                <th scope="col">status</th>
+                <th scope="col">status_date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ob in object_list %}
+            <tr>
+                <th scope="row">{{forloop.counter}}</th>
+                <td>{{ob.date_received|cut:" 00:00:00"}}</td>
+
+                <td><a
+                        href="{% url 'affidavits-detail' ob.id %}">{{ob.officer_name|upper}}</a>
+                </td>
+                <td>{{ob.contact_number|cut:".0"}}</td>
+                <td>{{ob.licence_name|title}}</td>
+                <td>{{ob.licence_number|upper}}</td>
+                <td>{{ob.adress}}</td>
+                <td>{{ob.vehicle_number}}</td>
+                <td>{{ob.vehicle_owner|title}}</td>
+                <td>{{ob.status}}</td>
+                <td>{{ob.status_date|cut:" 00:00:00"}}</td>
+            </tr>
+            {% endfor %}
+
+        </tbody>
+    </table>
+</div>
+<br>
+<div class="pagination">
+    {% if is_paginated %}
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+        <a href="?page=1&{{ query_params }}">&laquo; First</a>
+        <a
+            href="?page={{ page_obj.previous_page_number }}&{{ query_params }}">Previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of
+            {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+        <a
+            href="?page={{ page_obj.next_page_number }}&{{ query_params }}">Next</a>
+        <a href="?page={{ page_obj.paginator.num_pages }}&{{ query_params }}">Last
+            &raquo;</a>
+        {% endif %}
+    </span>
+    {% endif %}
+</div>
+
+{% endblock content %}

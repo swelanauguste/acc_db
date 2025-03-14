@@ -12,41 +12,6 @@ from .models import Exemptions, HPlates
 from .tasks import download_file, export_to_sqlite
 
 
-def export_to_sqlite(request):
-    """Exports ACCDB tables to SQLite upon user request."""
-
-    db = os.path.join(settings.BASE_DIR, "static/db/data.accdb")
-
-    if not os.path.exists(db):
-        messages.error(
-            request, "Error: The ACCDB file does not exist. Please download it first."
-        )
-        return redirect("/")
-
-    tables = {
-        "hplates": "h plates",
-        "exemptions": "exemptions",
-    }
-
-    conn = sqlite3.connect(os.path.join(settings.BASE_DIR, "db.sqlite3"))
-
-    for table_name, access_table in tables.items():
-        csv_file = f"static/csv/{table_name}.csv"
-        export_command = f"mdb-export {db} '{access_table}' > {csv_file}"
-
-        result = subprocess.run(
-            export_command, shell=True, capture_output=True, text=True
-        )
-
-        if result.returncode == 0:
-            df = pd.read_csv(csv_file)
-            df.to_sql(table_name, conn, if_exists="replace", index=False)
-        else:
-            messages.error(request, f"Error exporting {access_table}: {result.stderr}")
-
-    conn.close()
-    messages.success(request, "Data successfully imported into SQLite.")
-    return redirect("/")
 
 
 def download_file(request):
@@ -74,6 +39,54 @@ def download_file(request):
         return redirect("/")
 
     return redirect("export_to_sqlite")  # Redirect to next step
+
+def export_to_sqlite(request):
+    """Exports ACCDB tables to SQLite upon user request."""
+
+    db = os.path.join(settings.BASE_DIR, "static/db/data.accdb")
+
+    if not os.path.exists(db):
+        messages.error(
+            request, "Error: The ACCDB file does not exist. Please download it first."
+        )
+        return redirect("/")
+
+    tables = {
+        "hplates": "h plates",
+        "exemptions": "exemptions",
+        "affidavits": "AFFIDAVIDT",
+        "book_records": "BOOK RECORDS",
+        "customs": "CUSTOMS",
+        "disabled_parking": "DISABLED  PERMIT ( PARKING)",
+        "incoming_correspondences": "INCOMING Correspondence",
+        "cancelled_insurance_policies": "Insurance Policies Cancelled",
+        "invoices_payments": "Invoices / Payments",
+        "minibus_records": "Minibus Records",
+        "outgoing_correspondences": "OUTGOING Correspondence",
+        "personalized_number_plates": "Personalized Number Plates",
+        "special_permits": "special permit",
+    }
+
+    conn = sqlite3.connect(os.path.join(settings.BASE_DIR, "db.sqlite3"))
+
+    for table_name, access_table in tables.items():
+        csv_file = f"static/csv/{table_name}.csv"
+        export_command = f"mdb-export {db} '{access_table}' > {csv_file}"
+
+        result = subprocess.run(
+            export_command, shell=True, capture_output=True, text=True
+        )
+
+        if result.returncode == 0:
+            df = pd.read_csv(csv_file)
+            df.to_sql(table_name, conn, if_exists="replace", index=False)
+        else:
+            messages.error(request, f"Error exporting {access_table}: {result.stderr}")
+
+    conn.close()
+    messages.success(request, "Data successfully imported into SQLite.")
+    return redirect("/")
+
 
 
 def index(request):

@@ -1,6 +1,11 @@
 import os
 from pathlib import Path
 
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -26,7 +31,23 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "crispy_forms",
+    "crispy_bootstrap5",
+    "users",
     "reviews",
+    # "hplates",
+    # "exemptions",
+    "affidavits",
+    # "book_records",
+    # "customs",
+    # "disabled_parking",
+    # "incoming_correspondences",
+    # "cancelled_insurance_policies",
+    # "invoices_payments",
+    # "minibus_records",
+    # "outgoing_correspondences",
+    # "personalized_number_plates",
+    # "special_permits",
 ]
 
 MIDDLEWARE = [
@@ -95,7 +116,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = "UTC"
+TIME_ZONE = "America/St_Lucia"
 
 USE_I18N = True
 
@@ -117,3 +138,25 @@ directories = ["templates", "static", "static/db", "static/csv"]
 for directory in directories:
     if not os.path.exists(directory):
         os.makedirs(directory)
+
+
+# Static files (CSS, JavaScript, Images)
+STATIC_ROOT = BASE_DIR / "staticfiles"
+STATICFILES_DIRS = [BASE_DIR / "static"]
+
+# Media files (user-uploaded files)
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "mediafiles"
+
+# Custom user model
+AUTH_USER_MODEL = "users.User"
+
+AUTHENTICATION_BACKENDS = [
+    "django.contrib.auth.backends.ModelBackend",
+    "users.backends.EmailOrUsernameBackend",
+]
+PASSWORD_RESET_TIMEOUT = 3600
+
+# Crispy forms settings
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"
